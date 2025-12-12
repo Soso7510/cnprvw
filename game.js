@@ -326,10 +326,6 @@ function attack() {
     const player = getCurrentPlayer();
     const targetIndex = player.position;
     
-    // if (targetIndex >= gameState.path.length) {
-    //     updateMessage('Vous avez gagné !');
-    //     return;
-    // }
     
     const terrain = gameState.path[targetIndex];
     const force = gameState.currentCombination.force;
@@ -349,7 +345,7 @@ function attack() {
             terrain.damaged = true;
             terrain.damageTurns = 4;
             terrain.currentResistance = Math.max(
-                Math.floor(terrain.resistance * 0.8), 
+                Math.floor(terrain.currentResistance * 0.8), 
                 terrain.minResistance
             );
             
@@ -370,7 +366,7 @@ function attack() {
                 nextTerrain.damaged = true;
                 nextTerrain.damageTurns = 4;
                 nextTerrain.currentResistance = Math.max(
-                    Math.floor(nextTerrain.resistance * 0.8),nextTerrain.minResistance);
+                    Math.floor(nextTerrain.currentResistance * 0.8),nextTerrain.minResistance);
                 // message += ' - Terrain supplémentaire endommagé !';
             }
             excess -= nextTerrain.currentResistance;
@@ -378,10 +374,7 @@ function attack() {
 
             // message += ' - Franchit un terrain supplémentaire !';
         }
-        // if (player.position < gameState.path.length && excess > gameState.path[player.position].currentResistance) {
-        //     player.position++;
-        //     message += ' - Franchit 2 terrains !';
-        // }
+     
         message = `${player.name} a conquérit ${terrainConquered.length} terrain(s) (${terrainConquered.join(', ')}) ! - ${terrainDamaged} terrain(s) endommagé(s).`;
         // Vérifier victoire
         if (player.position >= gameState.path.length) {
@@ -389,13 +382,23 @@ function attack() {
             disableAllActions();
             return;
         }
-    } else if (resistance >= force * 1.5) {
+    } else if (force == resistance) {
+        message = "combat serré ! terrain endomagé !";
+        // Terrain endommagé
+        terrain.damaged = true;
+        terrain.damageTurns = 3;
+        terrain.currentResistance = Math.max(
+            Math.floor(terrain.currentResistance * 0.8), 
+            terrain.minResistance
+        );
+    }
+    else if (resistance >= force * 1.5) {
         // Recul
         if (player.position > 0) {
             player.position--;
-            message = `${player.name} recule d'un terrain ! (Force: ${force} vs ${Math.floor(resistance)})`;
+            message = `défaite écrasante! ${player.name} recule d'un terrain ! (Force: ${force} vs ${Math.floor(resistance)})`;
         } else {
-            message = `${player.name} ne peut pas reculer plus ! (Force: ${force} vs ${Math.floor(resistance)})`;
+            message = `défaite écrasante!`;
         }
     } else {
         // Attaque échouée
@@ -404,7 +407,7 @@ function attack() {
     
     // Mise à jour de la chance
     player.chance += gameState.currentCombination.chance;
-    player.maxGauge = 30 + Math.floor(player.chance * 3);
+    player.maxGauge = 30 + Math.floor(player.chance * 30/100);
     if (player.maxGauge > 45) player.maxGauge = 45;
     
     updateMessage(message);
@@ -424,7 +427,8 @@ function saveToMemory() {
     
     player.memory[freeSlot] = {
         code: gameState.currentCombination.code,
-        combination: gameState.currentCombination
+        combination: gameState.currentCombination,
+        dice: [...gameState.dice]
     };
     
     updateMessage(`${player.name} sauvegarde ${gameState.currentCombination.name}`);
@@ -436,13 +440,15 @@ function addToGauge() {
     
     const player = getCurrentPlayer();
     const force = gameState.currentCombination.force;
-    player.gauge += force;
+    const chanceBonus = (Math.random() * 100 < player.chance) ? 2 : 0 ;
+    player.gauge += force + chanceBonus;
+    
     
     if (player.gauge > player.maxGauge) {
         player.gauge = player.maxGauge;
     }
     
-    updateMessage(`${player.name} ajoute ${force} à sa jauge (Total: ${player.gauge}/${player.maxGauge})`);
+    updateMessage(`${player.name} ajoute ${force} + ${chanceBonus} bonus à sa jauge (Total: ${player.gauge}/${player.maxGauge})`);
     endTurn();
 }
 
@@ -461,6 +467,9 @@ document.querySelectorAll('.memory-card').forEach(card => {
         
         // Utiliser la carte mémoire
         gameState.currentCombination = memory.combination;
+        gameState.dice = [...memory.dice];
+        renderDice();
+        evaluateCombination()
         
         updateMessage(`${player.name} utilise la carte mémoire: ${memory.combination.name}`);
         
@@ -470,9 +479,19 @@ document.querySelectorAll('.memory-card').forEach(card => {
         // Activer les boutons d'action
         document.getElementById('attackBtn').disabled = false;
         document.getElementById('gaugeBtn').disabled = false;
-        document.getElementById('rollBtn').disabled = true;
+        document.getElementById('rollBtn').disabled = false;
         
-        updateUI();
+        
+         player.memory.forEach((mem, slot) => {
+            const card = document.querySelector(`.memory-card[data-player="${playerNum}"][data-slot="${slot}"]`);
+            if (mem) {
+                card.textContent = mem.code;
+                card.classList.add('filled');
+            } else {
+                card.innerHTML = '<i class="bi bi-plus-circle-dotted"></i>';
+                card.classList.remove('filled');
+            }
+        });
         
         document.getElementById('combinationInfo').innerHTML = `
             <strong>${memory.combination.name}</strong> (de la mémoire) - Force: ${memory.combination.force}
