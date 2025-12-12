@@ -1,0 +1,593 @@
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow-x: hidden;
+}
+
+/* Page de configuration */
+#setupPage {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#setupPage .card {
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+#setupPage h1 {
+    color: #764ba2;
+    font-weight: bold;
+}
+
+/* Page de jeu */
+#gamePage {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Zones joueurs */
+.player-zone {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.player1-zone {
+    border-top: 3px solid #ff6b6b;
+}
+
+.player2-zone {
+    border-bottom: 3px solid #4ecdc4;
+}
+
+.player-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.player1-zone .player-content {
+    flex-direction: row-reverse;
+}
+
+.player2-zone .player-content {
+    /* flex-direction: row-reverse; */
+}
+
+/* Avatar */
+.player-avatar {
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.player1-avatar .avatar-circle {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+}
+
+.player2-avatar .avatar-circle {
+    background: linear-gradient(135deg, #4ecdc4, #44a3d5);
+}
+
+/* Stats joueur */
+.player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.player-stats {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+}
+
+/* Jauge */
+.gauge-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gauge-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+}
+
+.gauge-value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #764ba2;
+}
+
+/* Chance et cartes mémoire */
+.chance-memory-container {
+    display: flex;
+    gap: 6px;
+}
+.player1-zone .player-content .player-info .player-stats .chance-memory-container {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 6px;
+}
+
+.chance-indicator {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    border-radius: 8px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.chance-indicator i {
+    font-size: 14px;
+    color: #ff6b00;
+}
+
+.chance-value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Cartes mémoire */
+.memory-cards {
+    display: flex;
+    gap: 6px;
+}
+
+.memory-card {
+    width: 45px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 12px;
+    color: #764ba2;
+}
+
+.memory-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.memory-card.filled {
+    background: linear-gradient(135deg, #a8e6cf, #56c596);
+}
+
+.memory-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.memory-card i {
+    font-size: 20px;
+}
+
+/* Zone de message */
+.message-zone {
+    padding: 10px;
+}
+
+.message-zone .alert {
+    border-radius: 10px;
+    font-size: 13px;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Zone du parcours */
+.path-zone {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px;
+    min-height: 0;
+}
+
+.path-container {
+    display: flex;
+    gap: 10px;
+    height: 100%;
+    align-items: center;
+}
+
+/* Cartes de terrain */
+.terrain-card {
+    min-width: 100px;
+    max-width: 100px;
+    height: 140px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.terrain-card.active {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+    border: 3px solid;
+}
+
+.terrain-card.active.both-players {
+    border-image: linear-gradient(135deg, #ff6b6b, #ff8e53, #4ecdc4, #44a3d5) 1;
+}
+
+.terrain-card.active.player1 {
+    border-color: #ff6b6b;
+}
+
+.terrain-card.active.player2 {
+    border-color: #4ecdc4;
+}
+
+.terrain-icon {
+    flex: 7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    border-radius: 10px 10px 0 0;
+    position: relative;
+}
+
+.terrain-resistance {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #764ba2;
+    color: white;
+    font-weight: bold;
+    border-radius: 0 0 10px 10px;
+    font-size: 20px;
+}
+
+.terrain-card.damaged .terrain-resistance {
+    background: #ff6b6b;
+}
+
+.terrain-card.damaged .terrain-icon::after {
+    content: '\F4FC';
+    font-family: 'bootstrap-icons';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.damage-turns {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: rgba(255, 107, 107, 0.9);
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.player-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid white;
+    z-index: 10;
+}
+
+.player1-marker {
+    background: #ff6b6b;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.player2-marker {
+    background: #4ecdc4;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Zone des dés */
+.dice-zone {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.dice-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    min-height: 60px;
+    align-items: center;
+}
+
+.dice-info {
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.die {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    animation: rollIn 0.5s ease-out;
+}
+
+@keyframes rollIn {
+    from {
+        transform: translateX(-100px) rotate(-360deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+    }
+}
+
+.die.locked {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.die:hover:not(.locked) {
+    transform: scale(1.05);
+}
+
+.die i {
+    color: #764ba2;
+}
+
+.die.locked i {
+    color: #333;
+}
+
+/* Couleurs des dés selon la valeur */
+.die[data-value="1"] { border: 3px solid #e74c3c; }
+.die[data-value="2"] { border: 3px solid #3498db; }
+.die[data-value="3"] { border: 3px solid #2ecc71; }
+.die[data-value="4"] { border: 3px solid #f39c12; }
+.die[data-value="5"] { border: 3px solid #9b59b6; }
+.die[data-value="6"] { border: 3px solid #e67e22; }
+
+.combination-info {
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Boutons d'action */
+.action-zone {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.action-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.roll-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Responsive - Tablettes */
+@media (min-width: 576px) {
+    .avatar-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 16px;
+    }
+
+    .terrain-card {
+        min-width: 120px;
+        max-width: 120px;
+        height: 160px;
+    }
+
+    .terrain-icon {
+        font-size: 50px;
+    }
+
+    .die {
+        width: 60px;
+        height: 60px;
+        font-size: 40px;
+    }
+
+    .memory-card {
+        width: 50px;
+        height: 45px;
+    }
+
+    .gauge-container,
+    .chance-indicator {
+        padding: 8px 12px;
+    }
+
+    .action-btn {
+        width: 70px;
+        height: 70px;
+        font-size: 28px;
+    }
+}
+
+/* Responsive - Desktop */
+@media (min-width: 768px) {
+    .player-zone {
+        padding: 15px 20px;
+    }
+
+    .avatar-circle {
+        width: 70px;
+        height: 70px;
+        font-size: 18px;
+    }
+
+    .terrain-card {
+        min-width: 140px;
+        max-width: 140px;
+        height: 180px;
+    }
+
+    .terrain-icon {
+        font-size: 60px;
+    }
+
+    .die {
+        width: 70px;
+        height: 70px;
+        font-size: 50px;
+        border-radius: 12px;
+    }
+
+    .memory-card {
+        width: 55px;
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .gauge-value,
+    .chance-value {
+        font-size: 16px;
+    }
+
+    .message-zone .alert {
+        font-size: 15px;
+        padding: 12px;
+    }
+
+    .combination-info {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+/* Responsive - Large desktop */
+@media (min-width: 1200px) {
+    .terrain-card {
+        min-width: 160px;
+        max-width: 160px;
+        height: 200px;
+    }
+
+    .terrain-icon {
+        font-size: 70px;
+    }
+
+    .terrain-resistance {
+        font-size: 24px;
+    }
+}
