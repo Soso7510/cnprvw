@@ -277,62 +277,43 @@ function evaluateCombination() {
     const counts = {};
     sorted.forEach(d => counts[d] = (counts[d] || 0) + 1);
     const countValues = Object.values(counts).sort((a, b) => b - a);
+    console.log('Counts:', counts, 'Count Values:', countValues);
     
-    let combo = COMBINATIONS.nada;
+    let combo = [];
     
     // Yatzy (5 identiques)
-    if (countValues[0] === 5) {
-        combo = COMBINATIONS.yatzy;
-    }
+   
+    countValues[0] === 5 && combo.push(COMBINATIONS.yatzy);
     // Carré (4 identiques)
-    else if (countValues[0] === 4) {
-        combo = COMBINATIONS.carre;
-    }
+    countValues[0] === 4 &&  combo.push(COMBINATIONS.carre);
     // Full (3 + 2)
-    else if (countValues[0] === 3 && countValues[1] === 2) {
-        combo = COMBINATIONS.full;
-    }
+    countValues[0] === 3 && countValues[1] === 2 &&  combo.push(COMBINATIONS.full);
     // Brelan (3 identiques)
-    else if (countValues[0] === 3) {
-        combo = COMBINATIONS.brelan;
-    }
+    countValues[0] === 3 &&  combo.push(COMBINATIONS.brelan);
     // Double (2 paires)
-    else if (countValues[0] === 2 && countValues[1] === 2) {
-        combo = COMBINATIONS.double;
-    }
-    // Suite complète (1-2-3-4-5-6)
-    else if (sorted.join('') === '123456') {
-        combo = COMBINATIONS.suite;
-    }
-    // Suite (1-2-3-4-5 ou 2-3-4-5-6)
-    else if (sorted.join('') === '12345' || sorted.join('') === '23456') {
-        combo = COMBINATIONS.suite;
-    }
-    // Petite suite (4 consécutifs)
-    else if (isSmallStraight(sorted)) {
-        combo = COMBINATIONS.petiteSuite;
-    }
+    countValues[0] === 2 && countValues[1] === 2 &&  combo.push(COMBINATIONS.double);
     
-    gameState.currentCombination = combo;
+    console.log(sorted);
+    // Suite (1-2-3-4-5 ou 2-3-4-5-6)
+    (sorted.join('') === '12345' || sorted.join('') === '23456') &&  combo.push(COMBINATIONS.suite);
+   
+    let noDoubleSorted = [...new Set(sorted)];
+    // Petite suite (4 consécutifs)
+    (noDoubleSorted.join('').includes('1234') || noDoubleSorted.join('').includes('2345') || noDoubleSorted.join('').includes('3456')) &&  combo.push(COMBINATIONS.petiteSuite);
+    
+    
+    if(combo.length === 0) {
+        gameState.currentCombination = COMBINATIONS.nada;
+    }else {
+        gameState.currentCombination = combo[0];
+    }
     
     document.getElementById('combinationInfo').innerHTML = `
-        <strong>${combo.name}</strong> - Force: ${combo.force} | Chance: +${combo.chance}
+        <strong>${gameState.currentCombination.name}</strong> - Force: ${gameState.currentCombination.force} | Chance: +${gameState.currentCombination.chance}
     `;
 }
 
-function isSmallStraight(sorted) {
-    const unique = [...new Set(sorted)].sort((a, b) => a - b);
-    if (unique.length < 4) return false;
-    
-    for (let i = 0; i <= unique.length - 4; i++) {
-        if (unique[i+1] === unique[i] + 1 && 
-            unique[i+2] === unique[i] + 2 && 
-            unique[i+3] === unique[i] + 3) {
-            return true;
-        }
-    }
-    return false;
-}
+
 
 // Actions
 document.getElementById('attackBtn').addEventListener('click', attack);
@@ -345,10 +326,10 @@ function attack() {
     const player = getCurrentPlayer();
     const targetIndex = player.position;
     
-    if (targetIndex >= gameState.path.length) {
-        updateMessage('Vous avez gagné !');
-        return;
-    }
+    // if (targetIndex >= gameState.path.length) {
+    //     updateMessage('Vous avez gagné !');
+    //     return;
+    // }
     
     const terrain = gameState.path[targetIndex];
     const force = gameState.currentCombination.force;
@@ -358,29 +339,50 @@ function attack() {
     
     if (force > resistance) {
         // Traversée réussie
-        message = `${player.name} traverse ${terrain.name} (Force: ${force} vs ${Math.floor(resistance)})`;
+        let terrainConquered = [terrain.name] , terrainDamaged = 0;
+
+        
         
         // Endommagement si force >= 1.5x résistance
         if (force >= resistance * 1.5) {
+            terrainDamaged++
             terrain.damaged = true;
-            terrain.damageTurns = 2;
+            terrain.damageTurns = 4;
             terrain.currentResistance = Math.max(
-                terrain.resistance * 0.8, 
+                Math.floor(terrain.resistance * 0.8), 
                 terrain.minResistance
             );
-            message += ' - Terrain endommagé !';
+            
         }
         
         // Excédent de force
-        const excess = force - resistance;
+        let excess = force - resistance;
         player.position++;
         
-        // Vérifier si on peut franchir le prochain terrain
-        if (player.position < gameState.path.length && excess > gameState.path[player.position].currentResistance) {
+        // Vérifier si on peut franchir le ou les terrains suivants
+        while (player.position < gameState.path.length && excess > gameState.path[player.position].currentResistance) {
+            const nextTerrain = gameState.path[player.position];
+            terrainConquered.push( nextTerrain.name);
+            
+            // Endommagement si excess >= 1.5x résistance
+            if (excess> nextTerrain.currentResistance * 1.5) {
+                terrainDamaged++
+                nextTerrain.damaged = true;
+                nextTerrain.damageTurns = 4;
+                nextTerrain.currentResistance = Math.max(
+                    Math.floor(nextTerrain.resistance * 0.8),nextTerrain.minResistance);
+                // message += ' - Terrain supplémentaire endommagé !';
+            }
+            excess -= nextTerrain.currentResistance;
             player.position++;
-            message += ' - Franchit 2 terrains !';
+
+            // message += ' - Franchit un terrain supplémentaire !';
         }
-        
+        // if (player.position < gameState.path.length && excess > gameState.path[player.position].currentResistance) {
+        //     player.position++;
+        //     message += ' - Franchit 2 terrains !';
+        // }
+        message = `${player.name} a conquérit ${terrainConquered.length} terrain(s) (${terrainConquered.join(', ')}) ! - ${terrainDamaged} terrain(s) endommagé(s).`;
         // Vérifier victoire
         if (player.position >= gameState.path.length) {
             updateMessage(`🎉 ${player.name} a conquis le Black Castle ! Victoire !`);
