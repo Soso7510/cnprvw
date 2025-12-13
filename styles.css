@@ -4,6 +4,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+ /* variables */
+:root {
+    --player1-color: #ff6b6b;
+    --player2-color: #4ecdc4;
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -113,7 +118,21 @@ body {
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+#player2GaugeBar{
+ background: linear-gradient(
+    to right,
+    var(--player2-color) var(--progress, 0%),
+    #fff var(--progress, 0%)
+  );
+}
+#player1GaugeBar{
+ background: linear-gradient(
+    to left,
+    var(--player1-color) var(--progress, 0%),
+    #fff var(--progress, 0%)
+  );
 
+}
 .gauge-label {
     font-size: 12px;
     font-weight: bold;
@@ -198,6 +217,31 @@ body {
 .memory-card i {
     font-size: 20px;
 }
+/*boost card*/
+.boost-card {
+    width: 45px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 12px;
+    color: #764ba2;
+}
+
+.boost-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.boost-card i {
+    font-size: 20px;
+}
+
 
 /* Zone de message */
 .message-zone {
