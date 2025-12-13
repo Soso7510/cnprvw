@@ -37,7 +37,7 @@ const gameState = {
         {
             name: 'Joueur 1',
             position: 0,
-            gauge: 30,
+            gauge: 0,
             maxGauge: 30,
             chance: 2,
             memory: [null, null, null],
@@ -631,3 +631,4 @@ function getPlayerGauge() {
     const player = getCurrentPlayer();
     return player.gauge;
 }
+
