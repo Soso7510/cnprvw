@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Règles du Jeu - Black Castle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/regles.css">
+</head>
+<body>
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h1 class="display-3 fw-bold gradient-text"><i class="fa-solid fa-chess-rook"></i> Black Castle</h1>
+            <p class="lead text-muted">Jeu de stratégie et de dés compétitif pour 2 joueurs</p>
+        </div>
+
+        <!-- Bouton retour -->
+        <div class="text-center mb-4">
+            <a href="index.html" class="btn btn-lg btn-gradient">
+                <i class="bi bi-arrow-left"></i> Retour au jeu
+            </a>
+        </div>
+
+        <!-- Objectif -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-trophy-fill"></i>
+                <h2>Objectif du Jeu</h2>
+            </div>
+            <div class="rule-content">
+                <p class="fs-5">Soyez le premier à conquérir le <strong>Black Castle</strong> en progressant sur un parcours composé de terrains variés. Utilisez vos lancers de dés pour créer des combinaisons puissantes et franchir les obstacles !</p>
+            </div>
+        </section>
+
+        <!-- Configuration -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-gear-fill"></i>
+                <h2>Configuration de la Partie</h2>
+            </div>
+            <div class="rule-content">
+                <ol>
+                    <li><strong>Entrez les noms</strong> des deux joueurs</li>
+                    <li><strong>Choisissez la longueur du parcours</strong> : 10, 20 ou 30 cartes</li>
+                    <li>Le parcours est généré aléatoirement avec différents types de terrains</li>
+                    <li>Le <strong>Black Castle</strong> est toujours la dernière carte du parcours</li>
+                    <li>Les deux joueurs commencent sur la première carte</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Déroulement du tour -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-arrow-repeat"></i>
+                <h2>Déroulement d'un Tour</h2>
+            </div>
+            <div class="rule-content">
+                <h4><i class="bi bi-dice-5"></i> 1. Lancer les dés</h4>
+                <ul>
+                    <li>Cliquez sur le bouton <span class="badge bg-primary"><i class="bi bi-arrow-repeat"></i></span> pour lancer 5 dés</li>
+                    <li>Vous avez droit à <strong>3 lancers maximum</strong> par tour</li>
+                    <li>Cliquez sur un dé pour le <strong>verrouiller</strong> (il sera jaune doré)</li>
+                    <li>Les dés verrouillés ne seront pas relancés</li>
+                </ul>
+
+                <h4 class="mt-4"><i class="bi bi-star-fill"></i> 2. Choisir une action</h4>
+                <p>Après avoir obtenu une combinaison, vous pouvez :</p>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="action-card">
+                            <div class="action-icon attack">
+                                <i class="bi bi-lightning-fill"></i>
+                            </div>
+                            <h5>Attaquer</h5>
+                            <p>Utilisez votre combinaison pour franchir les terrains</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="action-card">
+                            <div class="action-icon save">
+                                <i class="bi bi-save"></i>
+                            </div>
+                            <h5>Sauvegarder</h5>
+                            <p>Enregistrez votre combinaison dans une carte mémoire (3 max)</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="action-card">
+                            <div class="action-icon gauge">
+                                <i class="bi bi-battery-charging"></i>
+                            </div>
+                            <h5>Remplir la Jauge</h5>
+                            <p>Ajoutez la force de votre combinaison à votre jauge</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="action-card">
+                            <div class="action-icon memory">
+                                <i class="bi bi-plus-circle-dotted"></i>
+                            </div>
+                            <h5>Carte Mémoire</h5>
+                            <p>Cliquez sur une carte mémoire remplie pour réutiliser une combinaison</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combinaisons -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-collection"></i>
+                <h2>Les Combinaisons</h2>
+            </div>
+            <div class="rule-content">
+                <p class="mb-3">Inspirées du Yatzy, les combinaisons déterminent la puissance de votre attaque :</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Combinaison</th>
+                                <th>Description</th>
+                                <th class="text-center">Force</th>
+                                <th class="text-center">Bonus Chance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="combo-yatzy">
+                                <td><strong>Yatzy (T)</strong></td>
+                                <td>5 dés identiques <span class="text-muted">(ex: 6-6-6-6-6)</span></td>
+                                <td class="text-center fw-bold">30</td>
+                                <td class="text-center">+0</td>
+                            </tr>
+                            <tr class="combo-suite">
+                                <td><strong>Suite (S)</strong></td>
+                                <td>5 dés consécutifs <span class="text-muted">(1-2-3-4-5 ou 2-3-4-5-6)</span></td>
+                                <td class="text-center fw-bold">12</td>
+                                <td class="text-center">+1.3</td>
+                            </tr>
+                            <tr class="combo-carre">
+                                <td><strong>Carré (C)</strong></td>
+                                <td>4 dés identiques <span class="text-muted">(ex: 4-4-4-4-2)</span></td>
+                                <td class="text-center fw-bold">8</td>
+                                <td class="text-center">+0.2</td>
+                            </tr>
+                            <tr class="combo-petite-suite">
+                                <td><strong>Petite Suite (PS)</strong></td>
+                                <td>4 dés consécutifs <span class="text-muted">(ex: 2-3-4-5-1)</span></td>
+                                <td class="text-center fw-bold">7</td>
+                                <td class="text-center">+0.5</td>
+                            </tr>
+                            <tr class="combo-full">
+                                <td><strong>Full (F)</strong></td>
+                                <td>3 dés identiques + 2 identiques <span class="text-muted">(ex: 3-3-3-5-5)</span></td>
+                                <td class="text-center fw-bold">6</td>
+                                <td class="text-center">+0.4</td>
+                            </tr>
+                            <tr class="combo-brelan">
+                                <td><strong>Brelan (L)</strong></td>
+                                <td>3 dés identiques <span class="text-muted">(ex: 2-2-2-5-6)</span></td>
+                                <td class="text-center fw-bold">4</td>
+                                <td class="text-center">+1.0</td>
+                            </tr>
+                            <tr class="combo-double">
+                                <td><strong>Double (D)</strong></td>
+                                <td>2 paires <span class="text-muted">(ex: 2-2-5-5-6)</span></td>
+                                <td class="text-center fw-bold">2</td>
+                                <td class="text-center">+1.5</td>
+                            </tr>
+                            <tr class="combo-nada">
+                                <td><strong>Nada (N)</strong></td>
+                                <td>Aucune combinaison</td>
+                                <td class="text-center fw-bold">1</td>
+                                <td class="text-center">+2.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terrains -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="fa-solid fa-mountain"></i>
+                <h2>Les Terrains</h2>
+            </div>
+            <div class="rule-content">
+                <p class="mb-3">Chaque terrain a une <strong>résistance</strong> que vous devez dépasser pour avancer :</p>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Terrain</th>
+                                <th>Icône</th>
+                                <th class="text-center">Résistance</th>
+                                <th class="text-center">Résistance Min.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Plaine</strong></td>
+                                <td><i class="fa-solid fa-mountain text-success"></i></td>
+                                <td class="text-center">3</td>
+                                <td class="text-center">1</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ville</strong></td>
+                                <td><i class="fa-solid fa-city text-primary"></i></td>
+                                <td class="text-center">4</td>
+                                <td class="text-center">2</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fleuve</strong></td>
+                                <td><i class="fa-solid fa-water text-info"></i></td>
+                                <td class="text-center">5</td>
+                                <td class="text-center">3</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Forêt</strong></td>
+                                <td><i class="fa-solid fa-tree text-success"></i></td>
+                                <td class="text-center">6</td>
+                                <td class="text-center">3</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Montagne</strong></td>
+                                <td><i class="fa-solid fa-mountain text-secondary"></i></td>
+                                <td class="text-center">10</td>
+                                <td class="text-center">5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mer</strong></td>
+                                <td><i class="fa-solid fa-water-ladder text-info"></i></td>
+                                <td class="text-center">10</td>
+                                <td class="text-center">5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tour</strong></td>
+                                <td><i class="fa-solid fa-building text-warning"></i></td>
+                                <td class="text-center">13</td>
+                                <td class="text-center">3</td>
+                            </tr>
+                            <tr class="table-danger">
+                                <td><strong>Black Castle</strong></td>
+                                <td><i class="fa-solid fa-chess-rook text-dark"></i></td>
+                                <td class="text-center">100</td>
+                                <td class="text-center">10</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Combat -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-shield-fill-exclamation"></i>
+                <h2>Résolution des Combats</h2>
+            </div>
+            <div class="rule-content">
+                <div class="combat-scenario success">
+                    <h5><i class="bi bi-check-circle-fill"></i> Victoire : Force > Résistance</h5>
+                    <p>Vous franchissez le terrain et avancez d'une case.</p>
+                    <ul>
+                        <li>Si votre force ≥ 1,5× la résistance, le terrain est <strong>endommagé</strong> pendant 4 tours (résistance -20%)</li>
+                        <li>Si vous avez de la force en excès, elle s'applique au terrain suivant</li>
+                        <li>Vous pouvez franchir <strong>plusieurs terrains en un tour</strong> si votre force le permet</li>
+                    </ul>
+                </div>
+
+                <div class="combat-scenario draw mt-3">
+                    <h5><i class="bi bi-dash-circle-fill"></i> Égalité : Force = Résistance</h5>
+                    <p>Combat serré ! Le terrain est endommagé pendant 3 tours mais vous n'avancez pas.</p>
+                </div>
+
+                <div class="combat-scenario defeat mt-3">
+                    <h5><i class="bi bi-x-circle-fill"></i> Défaite Écrasante : Résistance ≥ 1,5× Force</h5>
+                    <p>Vous reculez d'un terrain (si possible).</p>
+                </div>
+
+                <div class="combat-scenario neutral mt-3">
+                    <h5><i class="bi bi-exclamation-circle-fill"></i> Échec : Force < Résistance</h5>
+                    <p>Attaque insuffisante, vous ne bougez pas.</p>
+                </div>
+
+                <div class="alert alert-info mt-3">
+                    <strong><i class="bi bi-info-circle"></i> Terrain Endommagé :</strong> Un terrain endommagé (icône rouge <i class="bi bi-fire"></i>) a une résistance réduite de 20% pendant un certain nombre de tours (affiché sur la carte). La résistance ne descend jamais en dessous du minimum.
+                </div>
+            </div>
+        </section>
+
+        <!-- Ressources -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-battery-charging"></i>
+                <h2>Ressources du Joueur</h2>
+            </div>
+            <div class="rule-content">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="bi bi-star-fill" style="color: #ffd700;"></i>
+                            </div>
+                            <h5>Chance</h5>
+                            <p>S'accumule selon vos combinaisons. Augmente votre jauge maximale (jusqu'à +15) et donne un bonus aléatoire lors du remplissage de jauge.</p>
+                            <small class="text-muted">Jauge max = 30 + (Chance × 30 / 100)</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="bi bi-battery-charging" style="color: #764ba2;"></i>
+                            </div>
+                            <h5>Jauge</h5>
+                            <p>Permet d'utiliser le boost. Se remplit en choisissant l'action "Remplir la Jauge" au lieu d'attaquer.</p>
+                            <small class="text-muted">Limite : 30 à 45 selon la chance</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="bi bi-lightning-fill" style="color: #ff6b00;"></i>
+                            </div>
+                            <h5>Boost</h5>
+                            <p>Cliquez sur l'icône éclair pour activer le boost (consomme 10, 20 ou 30 de jauge). Augmente votre force d'attaque du montant consommé.</p>
+                            <small class="text-muted">Niveaux : 10, 20 ou 30 de bonus</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-warning mt-3">
+                    <strong><i class="bi bi-lightbulb-fill"></i> Astuce :</strong> Les cartes mémoire vous permettent de sauvegarder une bonne combinaison pour l'utiliser plus tard. Vous pouvez avoir jusqu'à 3 cartes mémoires actives en même temps.
+                </div>
+            </div>
+        </section>
+
+        <!-- Victoire -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-trophy-fill"></i>
+                <h2>Conditions de Victoire</h2>
+            </div>
+            <div class="rule-content">
+                <p class="fs-5">Le premier joueur à <strong>conquérir le Black Castle</strong> remporte la partie !</p>
+                <ul>
+                    <li>Le Black Castle a une résistance de <strong>100</strong></li>
+                    <li>Contrairement aux autres terrains, sa résistance se réduit progressivement à chaque attaque réussie</li>
+                    <li>Il faut donc l'attaquer plusieurs fois pour le vaincre</li>
+                    <li>Utilisez vos meilleures combinaisons, vos cartes mémoire et votre jauge pour l'assaut final !</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Stratégie -->
+        <section class="rule-card mb-4">
+            <div class="rule-header">
+                <i class="bi bi-lightbulb-fill"></i>
+                <h2>Conseils Stratégiques</h2>
+            </div>
+            <div class="rule-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-dice-5"></i> Gestion des dés</h5>
+                        <ul>
+                            <li>Verrouillez les dés qui forment une combinaison intéressante</li>
+                            <li>N'hésitez pas à relancer pour obtenir une meilleure combinaison</li>
+                            <li>Pensez aux suites et aux pleins pour maximiser la force</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-save"></i> Cartes Mémoire</h5>
+                        <ul>
+                            <li>Sauvegardez vos meilleures combinaisons (Suite, Carré, Yatzy)</li>
+                            <li>Utilisez-les lors des terrains difficiles (Montagne, Tour)</li>
+                            <li>Gardez-en une pour l'assaut final du Black Castle</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-battery-charging"></i> Jauge et Boost</h5>
+                        <ul>
+                            <li>Remplissez votre jauge en début de partie</li>
+                            <li>Utilisez le boost sur les terrains résistants</li>
+                            <li>Un boost niveau 3 (30) peut faire la différence !</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-star-fill"></i> Chance</h5>
+                        <ul>
+                            <li>Privilégiez les combinaisons à haute chance en début de partie</li>
+                            <li>Une chance élevée = jauge maximale plus grande</li>
+                            <li>Les combinaisons faibles (Nada, Double) donnent plus de chance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Retour -->
+        <div class="text-center my-5">
+            <a href="index.html" class="btn btn-lg btn-gradient">
+                <i class="bi bi-play-fill"></i> Commencer une partie
+            </a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/regles.js"></script>
+</body>
+</html>
