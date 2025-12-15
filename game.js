@@ -591,7 +591,7 @@ function endTurn() {
             }
         }
     });
-
+    getCurrentPlayer().boost = BOOST_STATE.NONE;
     // Changer de joueur
     gameState.currentPlayer = 1 - gameState.currentPlayer;
 
@@ -601,6 +601,7 @@ function endTurn() {
     gameState.rollsLeft = 3;
     gameState.currentCombination = null;
     btnAttack.style.color = '#fff';
+
     // Réinitialiser l'UI
     document.getElementById('diceContainer').innerHTML = `
         <div class="dice-info">En attente que <span id="currentPlayerName">${getCurrentPlayer().name}</span> lance</div>
@@ -631,4 +632,3 @@ function getPlayerGauge() {
     const player = getCurrentPlayer();
     return player.gauge;
 }
-
