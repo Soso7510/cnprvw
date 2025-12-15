@@ -266,29 +266,31 @@
                     <h5><i class="bi bi-check-circle-fill"></i> Victoire : Force > Résistance</h5>
                     <p>Vous franchissez le terrain et avancez d'une case.</p>
                     <ul>
-                        <li>Si votre force ≥ 1,5× la résistance, le terrain est <strong>endommagé</strong> pendant 4 tours (résistance -20%)</li>
-                        <li>Si vous avez de la force en excès, elle s'applique au terrain suivant</li>
+                        <li>Si votre force ≥ 1,5× la résistance du terrain, le terrain est <strong>endommagé</strong> pendant 3 tours (résistance -20%)</li>
+                        <li>La différence entre la force  et la résistance s'applique au terrain suivant</li>
                         <li>Vous pouvez franchir <strong>plusieurs terrains en un tour</strong> si votre force le permet</li>
                     </ul>
                 </div>
 
                 <div class="combat-scenario draw mt-3">
                     <h5><i class="bi bi-dash-circle-fill"></i> Égalité : Force = Résistance</h5>
-                    <p>Combat serré ! Le terrain est endommagé pendant 3 tours mais vous n'avancez pas.</p>
+                    <p>Combat serré ! Le terrain est endommagé pendant 2 tours mais vous n'avancez pas.</p>
                 </div>
+
+                  <div class="combat-scenario neutral mt-3">
+                    <h5><i class="bi bi-exclamation-circle-fill"></i> Échec : Force < Résistance</h5>
+                    <p>Attaque insuffisante, vous ne bougez pas.</p>
+                </div>
+
 
                 <div class="combat-scenario defeat mt-3">
                     <h5><i class="bi bi-x-circle-fill"></i> Défaite Écrasante : Résistance ≥ 1,5× Force</h5>
                     <p>Vous reculez d'un terrain (si possible).</p>
                 </div>
 
-                <div class="combat-scenario neutral mt-3">
-                    <h5><i class="bi bi-exclamation-circle-fill"></i> Échec : Force < Résistance</h5>
-                    <p>Attaque insuffisante, vous ne bougez pas.</p>
-                </div>
-
+              
                 <div class="alert alert-info mt-3">
-                    <strong><i class="bi bi-info-circle"></i> Terrain Endommagé :</strong> Un terrain endommagé (icône rouge <i class="bi bi-fire"></i>) a une résistance réduite de 20% pendant un certain nombre de tours (affiché sur la carte). La résistance ne descend jamais en dessous du minimum.
+                    <strong><i class="bi bi-info-circle"></i> Terrain Endommagé :</strong> Un terrain endommagé  a une résistance réduite de 20% pendant un certain nombre de tours (affiché sur la carte). La résistance ne descend jamais en dessous du minimum.
                 </div>
             </div>
         </section>
@@ -307,8 +309,8 @@
                                 <i class="bi bi-star-fill" style="color: #ffd700;"></i>
                             </div>
                             <h5>Chance</h5>
-                            <p>S'accumule selon vos combinaisons. Augmente votre jauge maximale (jusqu'à +15) et donne un bonus aléatoire lors du remplissage de jauge.</p>
-                            <small class="text-muted">Jauge max = 30 + (Chance × 30 / 100)</small>
+                            <p>S'accumule selon vos combinaisons jouées. Augmente votre jauge maximale (jusqu'à +15) et donne un bonus aléatoire lors du remplissage de jauge.</p>
+                            <small class="text-muted">Chance max = 50%</small>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
@@ -327,7 +329,7 @@
                                 <i class="bi bi-lightning-fill" style="color: #ff6b00;"></i>
                             </div>
                             <h5>Boost</h5>
-                            <p>Cliquez sur l'icône éclair pour activer le boost (consomme 10, 20 ou 30 de jauge). Augmente votre force d'attaque du montant consommé.</p>
+                            <p>Cliquez plusieurs fois sur l'icône éclair pour activer/desactiver le boost (consomme 10 <i class="bi bi-lightning-fill" style="color: #ffcc00;"></i>, 20 <i class="bi bi-lightning-fill" style="color: #ff6b00;"></i> ou 30 <i class="bi bi-lightning-fill" style="color: #ff3300;"></i> de jauge). Augmente votre force d'attaque du montant consommé.</p>
                             <small class="text-muted">Niveaux : 10, 20 ou 30 de bonus</small>
                         </div>
                     </div>
