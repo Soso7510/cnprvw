@@ -635,3 +635,289 @@ body {
         font-size: 24px;
     }
 }
+
+/* Page de victoire */
+.victory-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.victory-overlay.show {
+    opacity: 1;
+}
+
+.victory-content {
+    text-align: center;
+    color: white;
+    position: relative;
+    z-index: 10000;
+    animation: victoryBounce 1s ease-out;
+}
+
+@keyframes victoryBounce {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.victory-castle {
+    font-size: 100px;
+    color: #ffd700;
+    margin-bottom: 20px;
+    animation: castlePulse 2s infinite ease-in-out;
+}
+
+@keyframes castlePulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 20px #ffd700);
+    }
+    50% {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 40px #ffd700);
+    }
+}
+
+.victory-title {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ffd700, #ff6b6b, #4ecdc4, #ffd700);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease infinite;
+    margin-bottom: 30px;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.winner-avatar {
+    display: inline-block;
+    padding: 10px;
+    border: 5px solid;
+    border-radius: 50%;
+    animation: avatarSpin 1s ease-out;
+    margin-bottom: 20px;
+}
+
+@keyframes avatarSpin {
+    0% {
+        transform: rotate(0deg) scale(0);
+    }
+    70% {
+        transform: rotate(360deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.winner-avatar .avatar-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 36px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.winner-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    animation: nameBounce 0.8s ease-out 0.5s both;
+}
+
+@keyframes nameBounce {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.victory-message {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 30px;
+    animation: fadeInUp 0.8s ease-out 0.7s both;
+}
+
+.victory-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.8s ease-out 0.9s both;
+    flex-wrap: wrap;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px 25px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-item i {
+    font-size: 1.5rem;
+    color: #ffd700;
+}
+
+.victory-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    animation: fadeInUp 0.8s ease-out 1.1s both;
+    flex-wrap: wrap;
+}
+
+.btn-victory {
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-replay {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.btn-replay:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+}
+
+.btn-rules {
+    background: linear-gradient(135deg, #4ecdc4, #44a3d5);
+    color: white;
+}
+
+.btn-rules:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(78, 205, 196, 0.5);
+}
+
+
+
+
+
+/* Confettis */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    z-index: 10001;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive victoire */
+@media (max-width: 768px) {
+    .victory-title {
+        font-size: 2rem;
+    }
+    
+    .winner-name {
+        font-size: 1.8rem;
+    }
+    
+    .victory-message {
+        font-size: 1.2rem;
+    }
+    
+    .victory-castle {
+        font-size: 70px;
+    }
+    
+    .winner-avatar .avatar-circle {
+        width: 90px;
+        height: 90px;
+        font-size: 28px;
+    }
+    
+    .victory-stats {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .btn-victory {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+}

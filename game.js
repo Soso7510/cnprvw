@@ -359,11 +359,12 @@ function attack() {
     const resistance = terrain.currentResistance;
     player.gauge -= boostValue;
     let message = '';
-    if (terrain.name == "Black Castle") {
+    if (terrain.name === "Black Castle") {
         terrain.currentResistance -= force;
         if (terrain.currentResistance < 0) {
             // victoire
-            updateMessage(`🎉 ${player.name} a conquis le Black Castle ! Victoire !`);
+           victory();
+           return;
         }else{
         terrain.currentResistance = Math.max(terrain.minResistance, terrain.currentResistance);
 
@@ -372,26 +373,13 @@ function attack() {
         
     }
     else if (force > resistance) {
-        // Traversée réussie
-        let terrainConquered = [terrain.name], terrainDamaged = 0;
+        // let terrainConquered = [terrain.name], terrainDamaged = 0;
+        let terrainConquered = [], terrainDamaged = 0;
 
-
-
-        // Endommagement si force >= 1.5x résistance
-        if (force >= resistance * 1.5) {
-            terrainDamaged++
-            terrain.damaged = true;
-            terrain.damageTurns = 4;
-            terrain.currentResistance = Math.max(
-                Math.floor(terrain.currentResistance * 0.8),
-                terrain.minResistance
-            );
-
-        }
 
         // Excédent de force
-        let excess = force - resistance;
-        player.position++;
+        let excess = force ;
+        
 
         // Vérifier si on peut franchir le ou les terrains suivants
         while (player.position < gameState.path.length && excess > gameState.path[player.position].currentResistance) {
@@ -416,9 +404,11 @@ function attack() {
         message = `${player.name} a conquérit ${terrainConquered.length} terrain(s) (${terrainConquered.join(', ')}) ! - ${terrainDamaged} terrain(s) endommagé(s).`;
         // Vérifier victoire
         if (player.position >= gameState.path.length) {
-            updateMessage(`🎉 ${player.name} a conquis le Black Castle ! Victoire !`);
-            disableAllActions();
-            return;
+           victory();
+           return;
+        }
+        if ( gameState.path[player.position].name === "Black Castle") {
+            gameState.path[player.position].currentResistance -= excess;
         }
     } else if (force == resistance) {
         message = "combat serré ! terrain endomagé !";
@@ -631,4 +621,92 @@ function disableAllActions() {
 function getPlayerGauge() {
     const player = getCurrentPlayer();
     return player.gauge;
+}
+
+function victory() {
+    disableAllActions();
+    
+    // Créer l'overlay de victoire
+    const victoryOverlay = document.createElement('div');
+    victoryOverlay.className = 'victory-overlay';
+    
+    const winner = getCurrentPlayer();
+    const playerColor = gameState.currentPlayer === 0 ? '#ff6b6b' : '#4ecdc4';
+    
+    victoryOverlay.innerHTML = `
+        <div class="victory-content">
+            <div class="victory-castle">
+                <i class="fa-solid fa-chess-rook"></i>
+            </div>
+          
+            <h1 class="victory-title">🎉 Victoire ! 🎉</h1>
+            <div class="winner-avatar" style="border-color: ${playerColor};">
+                <div class="avatar-circle" style="background: linear-gradient(135deg, ${playerColor}, ${playerColor}dd);">
+                    <span>${winner.name.substring(0, 2).toUpperCase()}</span>
+                </div>
+            </div>
+            <h2 class="winner-name" style="color: ${playerColor};">${winner.name}</h2>
+            <p class="victory-message">a conquis le Black Castle !</p>
+            <div class="victory-stats">
+                <div class="stat-item">
+                    <i class="bi bi-star-fill"></i>
+                    <span>Chance: ${winner.chance.toFixed(1)}</span>
+                </div>
+                <div class="stat-item">
+                    <i class="bi bi-battery-charging"></i>
+                    <span>Jauge: ${winner.gauge}/${winner.maxGauge}</span>
+                </div>
+                <div class="stat-item">
+                    <i class="bi bi-flag-fill"></i>
+                    <span>Position: ${winner.position + 1}/${gameState.path.length}</span>
+                </div>
+            </div>
+            <div class="victory-buttons">
+                <button class="btn-victory btn-replay" onclick="location.reload()">
+                    <i class="bi bi-arrow-repeat"></i> Nouvelle Partie
+                </button>
+                <button class="btn-victory btn-rules" onclick="window.location.href='regledujeu.html'">
+                    <i class="bi bi-book"></i> Règles
+                </button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(victoryOverlay);
+    
+    // Animation d'entrée
+    setTimeout(() => {
+        victoryOverlay.classList.add('show');
+    }, 100);
+   
+
+    // Effet sonore (si disponible) et confettis
+    playVictoryEffects();
+}
+
+function playVictoryEffects() {
+    // Animation de confettis
+    const colors = ['#ffd700', '#ff6b6b', '#4ecdc4', '#a8e6cf', '#ff8e53', '#44a3d5'];
+    const confettiCount = 100;
+    
+    for (let i = 0; i < confettiCount; i++) {
+        setTimeout(() => {
+            createConfetti(colors[Math.floor(Math.random() * colors.length)]);
+        }, i * 30);
+    }
+}
+
+function createConfetti(color) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.backgroundColor = color;
+    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+    
+    document.body.appendChild(confetti);
+    
+    setTimeout(() => {
+        confetti.remove();
+    }, 500);
 }
